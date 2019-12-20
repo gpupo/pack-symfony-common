@@ -73,7 +73,7 @@
         "gpupo/pack-symfony-dev": "*"
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "APP_ENV=test simple-phpunit"
     },
     "config": {
         "preferred-install": "dist"
