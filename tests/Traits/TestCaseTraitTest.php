@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of gpupo/common-dev
+ * This file is part of gpupo/pack-symfony-common
  * Created by Gilmar Pupo <contact@gpupo.com>
  * For the information of copyright and license you should read the file
  * LICENSE which is distributed with this source code.
@@ -15,24 +15,13 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\CommonDev\Tests\Traits;
+namespace Gpupo\PackSymfonyCommon\Tests\Traits;
 
-use Gpupo\CommonDev\Tests\TestCaseAbstract;
+use Gpupo\PackSymfonyCommon\Tests\TestCaseAbstract;
 
 /**
  * @coversNothing
  */
 class TestCaseTraitTest extends TestCaseAbstract
 {
-    public function testGetConstant()
-    {
-        $this->assertSame('bar', $this->getConstant('FOO'));
-        $this->assertFalse($this->getConstant('NOT_EXIST'));
-    }
-
-    public function testHasConstant()
-    {
-        $this->assertTrue($this->hasConstant('FOO'));
-        $this->assertFalse($this->hasConstant('NOT_EXIST'));
-    }
 }

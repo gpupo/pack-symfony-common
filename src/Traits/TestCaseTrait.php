@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of gpupo/common-dev
+ * This file is part of gpupo/pack-symfony-common
  * Created by Gilmar Pupo <contact@gpupo.com>
  * For the information of copyright and license you should read the file
  * LICENSE which is distributed with this source code.
@@ -15,23 +15,8 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\CommonDev\Traits;
+namespace Gpupo\PackSymfonyCommon\Traits;
 
 trait TestCaseTrait
 {
-    protected function getConstant($name, $default = false)
-    {
-        if (\defined($name)) {
-            return \constant($name);
-        }
-
-        return $default;
-    }
-
-    protected function hasConstant($name)
-    {
-        $value = $this->getConstant($name);
-
-        return empty($value) ? false : true;
-    }
 }

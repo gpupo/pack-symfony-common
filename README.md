@@ -1,6 +1,6 @@
-Common PHP tool for require-dev env
+Pacote de componentes de uso comum em projetos que rodam Symfony Framework
 
-[![Build Status](https://secure.travis-ci.org/gpupo/common-dev.png?branch=master)](http://travis-ci.org/gpupo/common-dev)
+[![Build Status](https://secure.travis-ci.org/gpupo/pack-symfony-common.png?branch=master)](http://travis-ci.org/gpupo/pack-symfony-common)
 
 
 ## Requisitos para uso
@@ -47,4 +47,4 @@ Proibido:
 
 Adicione o pacote ao seu projeto utilizando [composer](http://getcomposer.org):
 
-    composer require --dev gpupo/common-dev
+    composer require --dev gpupo/pack-symfony-common

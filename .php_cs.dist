@@ -1,11 +1,9 @@
 <?php
 
-require __DIR__.'/config/bootstrap.php';
-
 use Gpupo\CommonDevExtra\CsConfigurator;
 
 $packageInfo = [
-    'project' => 'gpupo/common-dev',
+    'project' => 'gpupo/pack-symfony-common',
     'author' => 'Gilmar Pupo <contact@gpupo.com>',
     'url' => 'https://opensource.gpupo.com/',
 ];
