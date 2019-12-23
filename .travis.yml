@@ -6,7 +6,7 @@ php:
   - 7.4
 before_script:
   - composer self-update
-  - COMPOSER_MEMORY_LIMIT=5G composer install --no-dev --prefer-dist
+  - COMPOSER_MEMORY_LIMIT=5G composer install --prefer-dist
 script: composer run-script test
 notifications:
   email: false
