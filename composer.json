@@ -51,6 +51,8 @@
       "symfony/expression-language": "^5.0",
       "jms/serializer-bundle": "^3.5",
       "sensio/framework-extra-bundle": "^5.5",
+      "php-translation/symfony-bundle": "^0.10",
+
       "gpupo/common-sdk": "^5.0",
 
       "doctrine/doctrine-migrations-bundle": "^2.1",
