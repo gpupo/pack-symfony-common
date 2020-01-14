@@ -63,7 +63,8 @@
       "willdurand/negotiation": "^2.3",
       "twig/twig": "^2.10",
       "twig/extensions": "^1.5",
-      "vich/uploader-bundle": "^1.12"
+      "vich/uploader-bundle": "^1.12",
+        "php-amqplib/php-amqplib": "^2.11"
     },
     "autoload": {
         "psr-4": {

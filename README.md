@@ -47,4 +47,4 @@ Proibido:
 
 Adicione o pacote ao seu projeto utilizando [composer](http://getcomposer.org):
 
-    composer require --dev gpupo/pack-symfony-common
+    composer require gpupo/pack-symfony-common
