@@ -17,10 +17,9 @@ declare(strict_types=1);
 
 namespace Gpupo\PackSymfonyCommon\Amqp;
 
-use PhpAmqpLib\Connection\AMQPConnection;
-use PhpAmqpLib\Connection\AMQPLazyConnection;
+use PhpAmqpLib\Channel\AMQPChannel;
 
-class Connection extends AMQPConnection
+class Channel extends AMQPChannel
 {
     /**
      * @param string $data
