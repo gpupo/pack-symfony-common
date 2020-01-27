@@ -22,11 +22,8 @@ use Monolog\DateTimeImmutable;
 
 class Formatter extends JsonFormatter
 {
-
     /**
      * {@inheritdoc}
-     *
-     * @suppress PhanTypeComparisonToArray
      */
     public function format(array $record): string
     {
@@ -43,7 +40,6 @@ class Formatter extends JsonFormatter
         return $this->toJson($normalized, true) . ($this->appendNewline ? "\n" : '');
     }
 
-//"datetime":{"date":"2020-01-23 18:20:02.522569","timezone_type":3,"timezone":"America/Sao_Paulo"},
     protected function normalizeDatetime(\DateTimeInterface $date)
     {
         $array = (array) $date->getTimezone();
