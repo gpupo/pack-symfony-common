@@ -15,13 +15,19 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\PackSymfonyCommon\Tests\Traits;
+namespace Gpupo\PackSymfonyCommon\Tests\Tools;
 
 use Gpupo\PackSymfonyCommon\Tests\TestCaseAbstract;
+use Gpupo\PackSymfonyCommon\Tools\DebugParameters;
 
 /**
  * @coversNothing
  */
-class TestCaseTraitTest extends TestCaseAbstract
+class DebugParametersTest extends TestCaseAbstract
 {
+    public function testGetParameters()
+    {
+        $parameters = DebugParameters::getParameters();
+        $this->assertEquals(phpversion(), $parameters['phpversion']);
+    }
 }

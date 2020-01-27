@@ -19,6 +19,7 @@ namespace Gpupo\PackSymfonyCommon\Amqp;
 
 use Monolog\Formatter\JsonFormatter;
 use Monolog\DateTimeImmutable;
+use Gpupo\PackSymfonyCommon\Tools\DebugParameters;
 
 class Formatter extends JsonFormatter
 {
@@ -27,23 +28,28 @@ class Formatter extends JsonFormatter
      */
     public function format(array $record): string
     {
-        $normalized = $this->normalize($record);
-        if (isset($normalized['context']) && $normalized['context'] === []) {
-            $normalized['context'] = new \stdClass;
+        $data = $this->normalize($record);
+        if (isset($data['context']) && $data['context'] === []) {
+            $data['context'] = new \stdClass;
         }
-        if (isset($normalized['extra']) && $normalized['extra'] === []) {
-            $normalized['extra'] = new \stdClass;
+        if (isset($data['extra']) && $data['extra'] === []) {
+            $data['extra'] = new \stdClass;
         }
 
-        $normalized['datetime'] = $this->normalizeDatetime($normalized['datetime']);
+        $data['datetime'] = $this->factoryDatetimeArray($data);
+        $data['debugParameters'] = DebugParameters::getParameters();
 
-        return $this->toJson($normalized, true) . ($this->appendNewline ? "\n" : '');
+        return $this->toJson($data, true) . ($this->appendNewline ? "\n" : '');
     }
 
-    protected function normalizeDatetime(\DateTimeInterface $date)
+
+    protected function factoryDatetimeArray($data): array
     {
-        $array = (array) $date->getTimezone();
-        $array['date'] = $date->format("Y-m-d H:i:s.u");
+        if (!array_key_exists('datetime', $data) || !$data['datetime'] instanceof DateTimeImmutable) {
+            $data['datetime'] = new DateTimeImmutable(true);
+        }
+        $array = (array) $data['datetime']->getTimezone();
+        $array['date'] = $data['datetime']->format("Y-m-d H:i:s.u");
 
         return $array;
     }
