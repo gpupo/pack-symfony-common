@@ -28,6 +28,6 @@ class DebugParametersTest extends TestCaseAbstract
     public function testGetParameters()
     {
         $parameters = DebugParameters::getParameters();
-        $this->assertEquals(phpversion(), $parameters['phpversion']);
+        $this->assertSame(PHP_VERSION, $parameters['phpversion']);
     }
 }

@@ -33,15 +33,15 @@ class DebugParameters
     protected static function factoryParameters(): void
     {
         self::$parameters = [
-            'phpversion' => phpversion(),
+            'phpversion' => PHP_VERSION,
         ];
 
         $data = array_merge($_SERVER, $_ENV);
-        foreach([
+        foreach ([
             'COMPOSE_PROJECT_NAME',
             'argv',
         ] as $k) {
-            if (array_key_exists($k, $data) && !empty($data[$k])) {
+            if (\array_key_exists($k, $data) && !empty($data[$k])) {
                 self::$parameters[$k] = $data[$k];
             }
         }

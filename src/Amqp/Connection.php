@@ -18,7 +18,6 @@ declare(strict_types=1);
 namespace Gpupo\PackSymfonyCommon\Amqp;
 
 use PhpAmqpLib\Connection\AMQPConnection;
-use PhpAmqpLib\Connection\AMQPLazyConnection;
 
 class Connection extends AMQPConnection
 {
@@ -27,8 +26,8 @@ class Connection extends AMQPConnection
      */
     public function write($data)
     {
-        if (defined('AMQP_LOG_OUTPUT')) {
-            file_put_contents(AMQP_LOG_OUTPUT, $data . "\n\n", FILE_APPEND | LOCK_EX);
+        if (\defined('AMQP_LOG_OUTPUT')) {
+            file_put_contents(AMQP_LOG_OUTPUT, $data."\n\n", FILE_APPEND | LOCK_EX);
         }
 
         parent::write($data);

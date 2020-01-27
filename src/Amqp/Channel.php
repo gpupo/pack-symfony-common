@@ -26,8 +26,8 @@ class Channel extends AMQPChannel
      */
     public function write($data)
     {
-        if (defined('AMQP_LOG_OUTPUT')) {
-            file_put_contents(AMQP_LOG_OUTPUT, $data . "\n\n", FILE_APPEND | LOCK_EX);
+        if (\defined('AMQP_LOG_OUTPUT')) {
+            file_put_contents(AMQP_LOG_OUTPUT, $data."\n\n", FILE_APPEND | LOCK_EX);
         }
 
         parent::write($data);
