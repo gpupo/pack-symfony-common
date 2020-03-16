@@ -62,7 +62,6 @@
       "nelmio/cors-bundle": "^2.0",
       "ocramius/proxy-manager": "^2.5",
       "willdurand/negotiation": "^2.3",
-      "twig/twig": "^3.0",
       "twig/extensions": "^1.5",
       "vich/uploader-bundle": "^1.12",
       "php-amqplib/php-amqplib": "^2.11"
