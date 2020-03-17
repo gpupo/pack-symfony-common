@@ -17,6 +17,10 @@
     </testsuites>
     <php>
         <const name="FOO" value="bar"/>
+
+        <!-- ###+ symfony/mailer ### -->
+        <!-- MAILER_DSN=smtp://localhost -->
+        <!-- ###- symfony/mailer ### -->
     </php>
     <filter>
         <whitelist>
