@@ -64,14 +64,14 @@ abstract class AbstractApiClient
         ];
     }
 
-    protected function factoryRequestUrl(string $url): string
+    protected function factoryRequestUrl(string $path): string
     {
-        return $url;
+        return $path;
     }
 
-    protected function request(string $mode, string $endpoint, array $parameters): ResponseInterface
+    protected function request(string $mode, string $path, array $parameters = []): ResponseInterface
     {
-        $endpoint = $this->factoryRequestUrl($url);
+        $endpoint = $this->factoryRequestUrl($path);
         $parameters = array_merge($this->factoryRequestOptions(), $parameters);
         
         return $this->getHttpClient()->request($mode, $endpoint, $parameters);
