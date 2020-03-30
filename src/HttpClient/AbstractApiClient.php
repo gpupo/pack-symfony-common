@@ -15,7 +15,7 @@ declare(strict_types=1);
  *
  */
 
-namespace App\HttpClient;
+namespace Gpupo\PackSymfonyCommon\HttpClient;
 
 use Gpupo\Common\Traits\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
