@@ -55,11 +55,26 @@ abstract class AbstractApiClient
         return $this->options;
     }
 
+    protected function factoryRequestOptions(): array 
+    {
+        return [
+            'headers' => [
+                'Content-Type' => 'text/json',
+            ],
+        ];
+    }
+
+    protected function factoryRequestUrl(string $url): string
+    {
+        return $url;
+    }
+
     protected function request(string $mode, string $endpoint, array $parameters): ResponseInterface
     {
-        $response = $this->getHttpClient()->request($mode, $endpoint, $parameters);
-
-        return $response;
+        $endpoint = $this->factoryRequestUrl($url);
+        $parameters = array_merge($this->factoryRequestOptions(), $parameters);
+        
+        return $this->getHttpClient()->request($mode, $endpoint, $parameters);
     }
 
     public function getRequest(string $path): ResponseInterface
@@ -67,10 +82,15 @@ abstract class AbstractApiClient
         return $this->request('GET', $path);
     }
 
-    public function payloadRequest(string $path, array $payload, string $method): ResponseInterface
+    protected function payloadNormalize(array $payload): array
+    {
+        return $payload;
+    }
+
+    protected function payloadRequest(string $path, array $payload, string $method): ResponseInterface
     {
         return $this->request($method, $path, [
-            'json' => $payloads,
+            'json' => $this->payloadNormalize($payload),
         ]);
     }
 
