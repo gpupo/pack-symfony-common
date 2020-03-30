@@ -61,4 +61,26 @@ abstract class AbstractApiClient
 
         return $response;
     }
+
+    public function getRequest(string $path): ResponseInterface
+    {
+        return $this->request('GET', $path);
+    }
+
+    public function payloadRequest(string $path, array $payload, string $method): ResponseInterface
+    {
+        return $this->request($method, $path, [
+            'json' => $payloads,
+        ]);
+    }
+
+    public function postRequest(string $path, array $payload): ResponseInterface
+    {
+        return $this->payloadRequest($path, $payload, 'POST');
+    }
+
+    public function putRequest(string $path, array $payload): ResponseInterface
+    {
+        return $this->payloadRequest($path, $payload, 'PUT');
+    }
 }
