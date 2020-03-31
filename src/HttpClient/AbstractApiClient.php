@@ -23,7 +23,7 @@ use Symfony\Component\HttpClient\HttpClientTrait;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-abstract class AbstractApiClient
+abstract class AbstractApiClient implements ApiClientInterface
 {
     use HttpClientTrait;
 
@@ -33,7 +33,7 @@ abstract class AbstractApiClient
 
     private array $options;
 
-    final public function __construct(array $options = [], HttpClientInterface $httpClient, LoggerInterface $logger = null)
+    public function __construct(array $options = [], HttpClientInterface $httpClient, LoggerInterface $logger = null)
     {
         $this->initLogger($logger, 'http-client');
         $this->setOptions($options);

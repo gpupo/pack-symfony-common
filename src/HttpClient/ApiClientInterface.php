@@ -15,26 +15,8 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\PackSymfonyCommon\Test;
-use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
+namespace Gpupo\PackSymfonyCommon\HttpClient;
 
-use Gpupo\Common\Tools\Reflected;
-
-trait HelperTrait
+interface ApiClientInterface
 {
-    use VarDumperTestTrait;
-
-    public function getPathResourcesDir()
-    {
-        if (\method_exists($this, 'bootKernel')) {
-            return self::bootKernel()->getProjectDir().'/Resources';
-        }
-
-        return 'Resources';
-    }
-
-    protected function proxy($object)
-    {
-        return new Reflected($object);
-    }
 }
