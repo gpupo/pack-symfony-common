@@ -16,14 +16,21 @@ declare(strict_types=1);
  */
 
 namespace Gpupo\PackSymfonyCommon\Test;
+use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 use Gpupo\Common\Tools\Reflected;
 
 trait HelperTrait
 {
+    use VarDumperTestTrait;
+    
     public function getPathResourcesDir()
     {
-        return self::bootKernel()->getProjectDir().'/Resources/';
+        if (\method_exists($this, 'bootKernel')) {
+            return self::bootKernel()->getProjectDir().'/Resources/';
+        }
+
+        return 'Resources/';
     }
 
     protected function proxy($object)

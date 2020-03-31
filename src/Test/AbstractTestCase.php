@@ -18,8 +18,10 @@ declare(strict_types=1);
 namespace Gpupo\PackSymfonyCommon\Test;
 
 use PHPUnit\Framework\TestCase;
+use Gpupo\CommonSdk\Traits\ResourcesTrait;
 
 abstract class AbstractTestCase extends TestCase
 {
+    use ResourcesTrait;
     use HelperTrait;
 }

@@ -37,10 +37,15 @@ abstract class AbstractApiClient
     {
         $this->initLogger($logger, 'http-client');
         $this->setOptions($options);
+        $this->setHttpCLient($httpClient);
+    }
+
+    public function setHttpCLient(HttpClientInterface $httpClient): void
+    {        
         $this->httpClient = $httpClient;
     }
 
-    protected function getHttpClient(): HttpClientInterface
+    public function getHttpClient(): HttpClientInterface
     {
         return $this->httpClient;
     }
