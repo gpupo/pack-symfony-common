@@ -33,7 +33,7 @@ abstract class AbstractApiClient
 
     private array $options;
 
-    final public function __construct(array $options = [], HttpClientInterface $httpClient, LoggerInterface $logger)
+    final public function __construct(array $options = [], HttpClientInterface $httpClient, LoggerInterface $logger = null)
     {
         $this->initLogger($logger, 'http-client');
         $this->setOptions($options);

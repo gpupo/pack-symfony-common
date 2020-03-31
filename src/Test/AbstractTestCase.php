@@ -19,9 +19,11 @@ namespace Gpupo\PackSymfonyCommon\Test;
 
 use PHPUnit\Framework\TestCase;
 use Gpupo\CommonSdk\Traits\ResourcesTrait;
+use Gpupo\Common\Traits\LoggerAwareTrait;
 
 abstract class AbstractTestCase extends TestCase
 {
     use ResourcesTrait;
     use HelperTrait;
+    use LoggerAwareTrait;
 }
