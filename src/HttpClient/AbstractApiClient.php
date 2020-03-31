@@ -41,13 +41,28 @@ abstract class AbstractApiClient implements ApiClientInterface
     }
 
     public function setHttpCLient(HttpClientInterface $httpClient): void
-    {        
+    {
         $this->httpClient = $httpClient;
     }
 
     public function getHttpClient(): HttpClientInterface
     {
         return $this->httpClient;
+    }
+
+    public function getRequest(string $path): ResponseInterface
+    {
+        return $this->request('GET', $path);
+    }
+
+    public function postRequest(string $path, array $payload): ResponseInterface
+    {
+        return $this->payloadRequest($path, $payload, 'POST');
+    }
+
+    public function putRequest(string $path, array $payload): ResponseInterface
+    {
+        return $this->payloadRequest($path, $payload, 'PUT');
     }
 
     protected function setOptions(array $options): void
@@ -60,7 +75,7 @@ abstract class AbstractApiClient implements ApiClientInterface
         return $this->options;
     }
 
-    protected function factoryRequestOptions(): array 
+    protected function factoryRequestOptions(): array
     {
         return [
             'headers' => [
@@ -78,13 +93,8 @@ abstract class AbstractApiClient implements ApiClientInterface
     {
         $endpoint = $this->factoryRequestUrl($path);
         $parameters = array_merge($this->factoryRequestOptions(), $parameters);
-        
-        return $this->getHttpClient()->request($mode, $endpoint, $parameters);
-    }
 
-    public function getRequest(string $path): ResponseInterface
-    {
-        return $this->request('GET', $path);
+        return $this->getHttpClient()->request($mode, $endpoint, $parameters);
     }
 
     protected function payloadNormalize(array $payload): array
@@ -97,15 +107,5 @@ abstract class AbstractApiClient implements ApiClientInterface
         return $this->request($method, $path, [
             'json' => $this->payloadNormalize($payload),
         ]);
-    }
-
-    public function postRequest(string $path, array $payload): ResponseInterface
-    {
-        return $this->payloadRequest($path, $payload, 'POST');
-    }
-
-    public function putRequest(string $path, array $payload): ResponseInterface
-    {
-        return $this->payloadRequest($path, $payload, 'PUT');
     }
 }

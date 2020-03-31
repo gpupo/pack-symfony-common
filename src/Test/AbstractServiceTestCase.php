@@ -34,6 +34,7 @@ abstract class AbstractServiceTestCase extends WebTestCase
         $casters = [
             \DateTimeInterface::class => static function (\DateTimeInterface $date, array $a, Stub $stub): array {
                 $stub->class = 'DateTime';
+
                 return ['date' => $date->format('d/m/Y')];
             },
         ];
@@ -44,7 +45,6 @@ abstract class AbstractServiceTestCase extends WebTestCase
         // If you need custom configurations per test rather than for the whole class,
         // call this setUpVarDumper() method from those tests instead.
         $this->setUpVarDumper($casters, $flags);
-    
     }
 
     public function getKernel()

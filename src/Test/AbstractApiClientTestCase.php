@@ -17,11 +17,11 @@ declare(strict_types=1);
 
 namespace Gpupo\PackSymfonyCommon\Test;
 
+use Gpupo\PackSymfonyCommon\HttpClient\ApiClientInterface;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
-use Gpupo\PackSymfonyCommon\HttpClient\ApiClientInterface;
 
 abstract class AbstractApiClientTestCase extends AbstractTestCase
 {

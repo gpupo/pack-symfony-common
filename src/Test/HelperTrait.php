@@ -16,9 +16,9 @@ declare(strict_types=1);
  */
 
 namespace Gpupo\PackSymfonyCommon\Test;
-use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 use Gpupo\Common\Tools\Reflected;
+use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 trait HelperTrait
 {
