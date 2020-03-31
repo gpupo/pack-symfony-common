@@ -17,10 +17,6 @@ declare(strict_types=1);
 
 namespace Gpupo\PackSymfonyCommon\GraphqlController;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use TheCodingMachine\GraphQLite\Annotations\Query;
-use Gpupo\PackSymfonyCommon\HttpClient\ApiClientAwareTrait;
 use Gpupo\Common\Tools\Doctrine\DoctrineManagerAwareTrait;
 use Gpupo\PackSymfonyCommon\Service\Remote\RemoteServiceAwareTrait;
 use Gpupo\PackSymfonyCommon\Validator\ValidatorAwareTrait;

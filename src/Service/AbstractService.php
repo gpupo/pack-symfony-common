@@ -19,5 +19,4 @@ namespace Gpupo\PackSymfonyCommon\Service;
 
 abstract class AbstractService
 {
-    
 }

@@ -17,9 +17,9 @@ declare(strict_types=1);
 
 namespace Gpupo\PackSymfonyCommon\Service\Remote;
 
-use Gpupo\PackSymfonyCommon\Service\AbstractService;
 use Gpupo\PackSymfonyCommon\HttpClient\ApiClientAwareTrait;
 use Gpupo\PackSymfonyCommon\HttpClient\ApiClientInterface;
+use Gpupo\PackSymfonyCommon\Service\AbstractService;
 
 abstract class AbstractRemoteService extends AbstractService
 {
