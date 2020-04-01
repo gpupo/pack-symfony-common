@@ -14,9 +14,9 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 trait ResponseHandlerTrait
 {
-    protected function throwException(string $message, int $code = 0, string $category = '')
+    protected function throwException(string $message, int $code = 0, $previous = null, string $category = '')
     {
-        throw new Exception($message, $code, null, $category ?: __CLASS__);
+        throw new Exception($message, $code, $previous, $category ?: __CLASS__);
     }
 
     protected function processResponse(ResponseInterface $response, callable $factory)
@@ -26,5 +26,17 @@ trait ResponseHandlerTrait
         }
 
         $this->throwException('Empty Results');
+    }
+
+    protected function checkViolations($violations): void
+    {
+        if (0 !== \count($violations)) {
+            $message = 'Invalid request.';
+            // there are errors, now you can show them
+            foreach ($violations as $violation) {
+                $message .= $violation->getMessage().".\n";
+            }
+            $this->throwException($message, 400);
+        }
     }
 }

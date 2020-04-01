@@ -13,13 +13,17 @@ namespace Gpupo\PackSymfonyCommon\Service\Remote;
 use Gpupo\PackSymfonyCommon\HttpClient\ApiClientAwareTrait;
 use Gpupo\PackSymfonyCommon\HttpClient\ApiClientInterface;
 use Gpupo\PackSymfonyCommon\Service\AbstractService;
+use Gpupo\PackSymfonyCommon\Validator\ValidatorAwareTrait;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractRemoteService extends AbstractService
 {
     use ApiClientAwareTrait;
+    use ValidatorAwareTrait;
 
-    public function __construct(ApiClientInterface $apiClient)
+    public function __construct(ApiClientInterface $apiClient, ValidatorInterface $validator)
     {
         $this->setApiClient($apiClient);
+        $this->setValidator($validator);
     }
 }
