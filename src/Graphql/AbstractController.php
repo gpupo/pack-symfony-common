@@ -8,7 +8,7 @@ declare(strict_types=1);
  * distributed with this source code. For more information, see <https://opensource.gpupo.com/>
  */
 
-namespace Gpupo\PackSymfonyCommon\GraphqlController;
+namespace Gpupo\PackSymfonyCommon\Graphql;
 
 use Gpupo\Common\Tools\Doctrine\DoctrineManagerAwareTrait;
 use Gpupo\PackSymfonyCommon\Service\Remote\RemoteServiceAwareTrait;
