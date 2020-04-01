@@ -47,7 +47,8 @@
       "symfony/yaml": "^5.0",
       "symfony/translation": "5.0.*",
       "symfony/twig-pack": "*",
-
+      "symfony/mailer": "^5.0",
+      "symfony/notifier": "^5.0",
       "symfony/expression-language": "^5.0",
       "jms/serializer-bundle": "^3.5",
       "sensio/framework-extra-bundle": "^5.5",
