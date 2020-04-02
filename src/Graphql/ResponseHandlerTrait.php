@@ -19,13 +19,22 @@ trait ResponseHandlerTrait
         throw new Exception($message, $code, $previous, $category ?: __CLASS__);
     }
 
-    protected function processResponse(ResponseInterface $response, callable $factory)
+    protected function checkStatusCode(ResponseInterface $response): void
     {
-        if (200 === $response->getStatusCode()) {
-            return $factory($response);
+        $statusCode = $response->getStatusCode();
+
+        if (199 < $statusCode && 300 > $statusCode) {
+            return;
         }
 
         $this->throwException('Empty Results');
+    }
+
+    protected function processResponse(ResponseInterface $response, callable $factory)
+    {
+        $this->checkStatusCode($response);
+
+        return $factory($response);
     }
 
     protected function checkViolations($violations): void

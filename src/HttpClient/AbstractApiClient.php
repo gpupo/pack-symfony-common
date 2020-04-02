@@ -10,9 +10,12 @@ declare(strict_types=1);
 
 namespace Gpupo\PackSymfonyCommon\HttpClient;
 
+use Gpupo\Common\Tools\Cache\SimpleCacheAwareTrait;
 use Gpupo\Common\Traits\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\HttpClientTrait;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -21,19 +24,29 @@ abstract class AbstractApiClient implements ApiClientInterface
     use HttpClientTrait;
     use HttpClientAwareTrait;
     use LoggerAwareTrait;
+    use SimpleCacheAwareTrait;
 
     private array $options;
 
-    public function __construct(array $options = [], HttpClientInterface $httpClient, LoggerInterface $logger = null)
+    public function __construct(array $options = [], HttpClientInterface $httpClient, CacheInterface $cache, LoggerInterface $logger = null)
     {
         $this->initLogger($logger, 'api-http-client');
         $this->setOptions($options);
         $this->setHttpCLient($httpClient);
+        $this->setSimpleCache($cache);
     }
 
     public function getRequest(string $path, array $options = []): ResponseInterface
     {
-        return $this->request('GET', $path, $options);
+        $cacheKey = $this->simpleCacheGenerateId([$path, $options], 'url_');
+
+        $value = $this->getSimpleCache()->get($cacheKey, function (ItemInterface $item) use ($path, $options) {
+            $item->expiresAfter(3600);
+
+            return $this->request('GET', $path, $options);
+        });
+
+        return $value;
     }
 
     public function postRequest(string $path, array $payload, array $options = []): ResponseInterface
