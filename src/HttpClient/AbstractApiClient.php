@@ -28,7 +28,7 @@ abstract class AbstractApiClient implements ApiClientInterface
 
     private array $options;
 
-    public function __construct(array $options = [], HttpClientInterface $httpClient, CacheInterface $cache, LoggerInterface $logger = null)
+    public function __construct(array $options = [], HttpClientInterface $httpClient, CacheInterface $cache = null, LoggerInterface $logger = null)
     {
         $this->initLogger($logger, 'api-http-client');
         $this->setOptions($options);
@@ -38,15 +38,16 @@ abstract class AbstractApiClient implements ApiClientInterface
 
     public function getRequest(string $path, array $options = []): ResponseInterface
     {
-        $cacheKey = $this->simpleCacheGenerateId([$path, $options], 'url_');
+        if (!$this->hasSimpleCache()) {
+            return $this->request('GET', $path, $options);
+        }
 
-        $value = $this->getSimpleCache()->get($cacheKey, function (ItemInterface $item) use ($path, $options) {
+        $cacheKey = $this->simpleCacheGenerateId([$path, $options], 'url_');
+        return $this->getSimpleCache()->get($cacheKey, function (ItemInterface $item) use ($path, $options) {
             $item->expiresAfter(3600);
 
             return $this->request('GET', $path, $options);
         });
-
-        return $value;
     }
 
     public function postRequest(string $path, array $payload, array $options = []): ResponseInterface
