@@ -19,28 +19,16 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 abstract class AbstractApiClient implements ApiClientInterface
 {
     use HttpClientTrait;
-
+    use HttpClientAwareTrait;
     use LoggerAwareTrait;
-
-    private HttpClientInterface $httpClient;
 
     private array $options;
 
     public function __construct(array $options = [], HttpClientInterface $httpClient, LoggerInterface $logger = null)
     {
-        $this->initLogger($logger, 'http-client');
+        $this->initLogger($logger, 'api-http-client');
         $this->setOptions($options);
         $this->setHttpCLient($httpClient);
-    }
-
-    public function setHttpCLient(HttpClientInterface $httpClient): void
-    {
-        $this->httpClient = $httpClient;
-    }
-
-    public function getHttpClient(): HttpClientInterface
-    {
-        return $this->httpClient;
     }
 
     public function getRequest(string $path): ResponseInterface
@@ -74,6 +62,9 @@ abstract class AbstractApiClient implements ApiClientInterface
             'headers' => [
                 'Content-Type' => 'text/json',
             ],
+            'extra' => [
+                'no_cache' => false,
+            ],
         ];
     }
 
@@ -82,12 +73,19 @@ abstract class AbstractApiClient implements ApiClientInterface
         return $path;
     }
 
-    protected function request(string $mode, string $path, array $parameters = []): ResponseInterface
+    protected function request(string $method, string $path, array $options = []): ResponseInterface
     {
-        $endpoint = $this->factoryRequestUrl($path);
-        $parameters = array_merge($this->factoryRequestOptions(), $parameters);
+        $url = $this->factoryRequestUrl($path);
+        $options = $this->factoryRequestOptions() + $options;
 
-        return $this->getHttpClient()->request($mode, $endpoint, $parameters);
+        $this->getLogger() && $this->getLogger()->debug('request', [
+            'client' => \get_class($this->getHttpClient()),
+            'method' => $method,
+            'endpoint' => $url,
+            'options' => $options,
+        ]);
+
+        return $this->getHttpClient()->request($method, $url, $options);
     }
 
     protected function payloadNormalize(array $payload): array
