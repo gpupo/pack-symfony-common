@@ -48,4 +48,11 @@ trait ResponseHandlerTrait
             $this->throwException($message, 400);
         }
     }
+
+    protected function processResponseEntity(ResponseInterface $response)
+    {
+        return $this->processResponse($response, function (ResponseInterface $response) {
+            return $this->factoryEntity($response->toArray());
+        });
+    }
 }

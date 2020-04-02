@@ -15,6 +15,7 @@ use Gpupo\PackSymfonyCommon\HttpClient\ApiClientInterface;
 use Gpupo\PackSymfonyCommon\Service\AbstractService;
 use Gpupo\PackSymfonyCommon\Validator\ValidatorAwareTrait;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Gpupo\PackSymfonyCommon\Graphql\TypeAnnotatedGeneratorInterface;
 
 abstract class AbstractRemoteService extends AbstractService
 {
@@ -25,5 +26,17 @@ abstract class AbstractRemoteService extends AbstractService
     {
         $this->setApiClient($apiClient);
         $this->setValidator($validator);
+    }
+
+    abstract protected function factoryEntity(array $data): TypeAnnotatedGeneratorInterface;
+
+    protected function factoryCollection(array $data): array
+    {
+        $list = [];
+        foreach ($data as $item) {
+            $list[] = $this->factoryEntity($item);
+        }
+
+        return $list;
     }
 }
