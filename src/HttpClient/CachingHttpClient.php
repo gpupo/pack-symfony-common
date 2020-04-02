@@ -38,7 +38,7 @@ class CachingHttpClient implements HttpClientInterface
             throw new \LogicException(sprintf('Using "%s" requires that the HttpKernel component version 4.3 or higher is installed, try running "composer require symfony/http-kernel:^4.3".', __CLASS__));
         }
 
-        $this->initLogger($logger, 'cache-http-client');
+        $this->initLogger($logger, 'caching-http');
         $this->setHttpCLient($httpClient);
 
         $kernel = new HttpClientKernel($httpClient);
@@ -68,13 +68,6 @@ class CachingHttpClient implements HttpClientInterface
 
             return $this->getHttpClient()->request($method, $url, $options);
         }
-
-        $this->getLogger() && $this->getLogger()->debug('Using cache', [
-            'method' => $method,
-            'endpoint' => $url,
-            'options' => $options,
-        ]);
-
         $request = Request::create($url, $method);
         $request->attributes->set('http_client_options', $options);
 
@@ -101,6 +94,13 @@ class CachingHttpClient implements HttpClientInterface
         $response = new MockResponse($response->getContent(), [
             'http_code' => $response->getStatusCode(),
             'response_headers' => $response->headers->allPreserveCase(),
+        ]);
+
+        $this->getLogger() && $this->getLogger()->debug('Using cache', [
+            'method' => $method,
+            'endpoint' => $url,
+            'options' => $options,
+            'httpCache' => $this->cache->getLog(),
         ]);
 
         return MockResponse::fromRequest($method, $url, $options, $response);

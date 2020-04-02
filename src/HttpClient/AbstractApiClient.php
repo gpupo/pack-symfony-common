@@ -31,19 +31,19 @@ abstract class AbstractApiClient implements ApiClientInterface
         $this->setHttpCLient($httpClient);
     }
 
-    public function getRequest(string $path): ResponseInterface
+    public function getRequest(string $path, array $options = []): ResponseInterface
     {
-        return $this->request('GET', $path);
+        return $this->request('GET', $path, $options);
     }
 
-    public function postRequest(string $path, array $payload): ResponseInterface
+    public function postRequest(string $path, array $payload, array $options = []): ResponseInterface
     {
-        return $this->payloadRequest($path, $payload, 'POST');
+        return $this->payloadRequest($path, $payload, 'POST', $options);
     }
 
-    public function putRequest(string $path, array $payload): ResponseInterface
+    public function putRequest(string $path, array $payload, array $options = []): ResponseInterface
     {
-        return $this->payloadRequest($path, $payload, 'PUT');
+        return $this->payloadRequest($path, $payload, 'PUT', $options);
     }
 
     protected function setOptions(array $options): void
@@ -73,7 +73,7 @@ abstract class AbstractApiClient implements ApiClientInterface
         return $path;
     }
 
-    protected function request(string $method, string $path, array $options = []): ResponseInterface
+    protected function request(string $method, string $path, array $options): ResponseInterface
     {
         $url = $this->factoryRequestUrl($path);
         $options = $this->factoryRequestOptions() + $options;
@@ -93,10 +93,10 @@ abstract class AbstractApiClient implements ApiClientInterface
         return $payload;
     }
 
-    protected function payloadRequest(string $path, array $payload, string $method): ResponseInterface
+    protected function payloadRequest(string $path, array $payload, string $method, array $options): ResponseInterface
     {
         return $this->request($method, $path, [
             'json' => $this->payloadNormalize($payload),
-        ]);
+        ] + $options);
     }
 }
