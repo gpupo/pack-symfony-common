@@ -56,7 +56,10 @@ trait ResponseHandlerTrait
         });
     }
 
-    abstract protected function factoryEntity(array $data): TypeAnnotatedGeneratorInterface;
+    protected function factoryEntity(array $data): TypeAnnotatedGeneratorInterface
+    {
+        $this->throwException('::factoryEntity must be implemented in the final class', 500);
+    }
 
     protected function responseColletionToData(ResponseInterface $response): array
     {
