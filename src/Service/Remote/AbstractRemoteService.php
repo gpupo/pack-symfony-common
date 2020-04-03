@@ -17,10 +17,25 @@ use Gpupo\PackSymfonyCommon\Validator\ValidatorAwareTrait;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Gpupo\PackSymfonyCommon\Graphql\TypeAnnotatedGeneratorInterface;
 
+use Gpupo\PackSymfonyCommon\Graphql\ResponseHandlerTrait;
+use Gpupo\PackSymfonyCommon\Service\Remote\AbstractRemoteService;
+use Gpupo\PackSymfonyCommon\Service\Remote\RemoteServiceInterface;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\HttpClient\ResponseInterface;
+
 abstract class AbstractRemoteService extends AbstractService
 {
     use ApiClientAwareTrait;
     use ValidatorAwareTrait;
+    use ResponseHandlerTrait;
+
+    protected string $domain;
+    
+    protected function getDomain(): string
+    {
+        return $this->domain;
+    }
 
     public function __construct(ApiClientInterface $apiClient, ValidatorInterface $validator)
     {
@@ -28,15 +43,31 @@ abstract class AbstractRemoteService extends AbstractService
         $this->setValidator($validator);
     }
 
-    abstract protected function factoryEntity(array $data): TypeAnnotatedGeneratorInterface;
-
-    protected function factoryCollection(array $data): array
+    public function findById(string $id): ?TypeAnnotatedGeneratorInterface
     {
-        $list = [];
-        foreach ($data as $item) {
-            $list[] = $this->factoryEntity($item);
-        }
+        $this->checkViolations(
+            $this->getValidator()
+                ->validate($id, [
+                new Length(['min' => 18]),
+                new NotBlank(),
+            ])
+        );
+        
+        return $this->findByPath(sprintf('/%s/%s', $this->getDomain(), $id));
+    }
 
-        return $list;
+    public function findByPath(string $path): ?TypeAnnotatedGeneratorInterface
+    {
+        return $this->responseToEntity($this->getApiClient()->getRequest($path));
+    }
+
+    public function findAll(): array
+    {
+        $path = sprintf('/%s', $this->getDomain());
+        $response = $this->getApiClient()->getRequest($path);
+
+        return $this->responseToCollection($response, function (ResponseInterface $response) {
+            return $this->responseToCollection($response);
+        });
     }
 }

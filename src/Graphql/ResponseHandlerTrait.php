@@ -30,7 +30,7 @@ trait ResponseHandlerTrait
         $this->throwException('Empty Results');
     }
 
-    protected function processResponse(ResponseInterface $response, callable $factory)
+    protected function factoryFromResponse(ResponseInterface $response, callable $factory)
     {
         $this->checkStatusCode($response);
 
@@ -49,10 +49,32 @@ trait ResponseHandlerTrait
         }
     }
 
-    protected function processResponseEntity(ResponseInterface $response)
+    protected function responseToEntity(ResponseInterface $response)
     {
-        return $this->processResponse($response, function (ResponseInterface $response) {
-            return $this->factoryEntity($response->toArray());
+        return $this->factoryFromResponse($response, function (ResponseInterface $response) {
+            return $this->factoryEntity($this->responseEntityToData($response));
         });
+    }
+
+    abstract protected function factoryEntity(array $data): TypeAnnotatedGeneratorInterface;
+
+    protected function responseColletionToData(ResponseInterface $response): array
+    {
+        return $response->toArray();
+    }
+
+    protected function responseEntityToData(ResponseInterface $response): array
+    {
+        return $response->toArray();
+    }
+
+    protected function responseToCollection(ResponseInterface $response): array
+    {
+        $list = [];
+        foreach ($this->responseColletionToData($response) as $item) {
+            $list[] = $this->factoryEntity($item);
+        }
+
+        return $list;
     }
 }
