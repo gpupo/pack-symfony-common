@@ -19,7 +19,7 @@ trait EntityTypeTrait
         return $this->elementEmpty($key) ? null : new DateTimeImmutable($this->get($key));
     }
 
-    protected function jsonEncodedGetter(string $key): ?DateTimeImmutable
+    protected function jsonEncodedGetter(string $key): ?string
     {
         return $this->elementEmpty($key) ? null : json_encode($this->get($key));
     }

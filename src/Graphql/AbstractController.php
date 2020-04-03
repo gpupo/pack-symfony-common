@@ -19,4 +19,5 @@ abstract class AbstractController
     use RemoteServiceAwareTrait;
     use DoctrineManagerAwareTrait;
     use ValidatorAwareTrait;
+    use ResponseHandlerTrait;
 }
