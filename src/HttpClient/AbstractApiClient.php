@@ -43,6 +43,7 @@ abstract class AbstractApiClient implements ApiClientInterface
         }
 
         $cacheKey = $this->simpleCacheGenerateId([$path, $options], 'url_');
+
         return $this->getSimpleCache()->get($cacheKey, function (ItemInterface $item) use ($path, $options) {
             $item->expiresAfter(3600);
 
