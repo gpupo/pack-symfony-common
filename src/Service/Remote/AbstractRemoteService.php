@@ -20,19 +20,23 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
+use Psr\Log\LoggerInterface;
+use Gpupo\Common\Traits\LoggerAwareTrait;
 
 abstract class AbstractRemoteService extends AbstractService
 {
     use ApiClientAwareTrait;
     use ValidatorAwareTrait;
     use ResponseHandlerTrait;
+    use LoggerAwareTrait;
 
     protected string $domain;
 
-    public function __construct(ApiClientInterface $apiClient, ValidatorInterface $validator)
+    public function __construct(ApiClientInterface $apiClient, ValidatorInterface $validator, LoggerInterface $logger)
     {
         $this->setApiClient($apiClient);
         $this->setValidator($validator);
+        $this->initLogger($logger, 'remote-service');
     }
 
     public function findById(string $id): ?TypeAnnotatedGeneratorInterface
