@@ -44,7 +44,7 @@ abstract class AbstractRemoteService extends AbstractService
         $this->checkViolations(
             $this->getValidator()
                 ->validate($id, [
-                new Length(['min' => 18]),
+                new Length(['min' => 5]),
                 new NotBlank(),
             ])
         );

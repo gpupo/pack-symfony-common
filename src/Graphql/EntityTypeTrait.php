@@ -26,7 +26,17 @@ trait EntityTypeTrait
 
     protected function entityFactoryGetter(string $key, string $className)
     {
-        return $this->elementEmpty($key) ? null : new $className($this->get($key));
+        if ($this->elementEmpty($key)){
+            return null;
+        }
+
+        $value = $this->get($key);
+
+        if ($value instanceof $className) {
+            return $value;
+        }
+
+        return new $className($value);
     }
 
     protected function collectionFactoryGetter(string $key, string $className, callable $lambda = null)
