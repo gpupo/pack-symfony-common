@@ -10,18 +10,18 @@ declare(strict_types=1);
 
 namespace Gpupo\PackSymfonyCommon\Service\Remote;
 
+use Gpupo\Common\Traits\LoggerAwareTrait;
 use Gpupo\PackSymfonyCommon\Graphql\ResponseHandlerTrait;
 use Gpupo\PackSymfonyCommon\Graphql\TypeAnnotatedGeneratorInterface;
 use Gpupo\PackSymfonyCommon\HttpClient\ApiClientAwareTrait;
 use Gpupo\PackSymfonyCommon\HttpClient\ApiClientInterface;
 use Gpupo\PackSymfonyCommon\Service\AbstractService;
 use Gpupo\PackSymfonyCommon\Validator\ValidatorAwareTrait;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
-use Psr\Log\LoggerInterface;
-use Gpupo\Common\Traits\LoggerAwareTrait;
 
 abstract class AbstractRemoteService extends AbstractService
 {

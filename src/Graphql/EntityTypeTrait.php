@@ -26,7 +26,7 @@ trait EntityTypeTrait
 
     protected function entityFactoryGetter(string $key, string $className)
     {
-        if ($this->elementEmpty($key)){
+        if ($this->elementEmpty($key)) {
             return null;
         }
 
