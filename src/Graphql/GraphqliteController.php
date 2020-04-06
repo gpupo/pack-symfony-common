@@ -15,10 +15,10 @@ use GraphQL\Error\Debug;
 use GraphQL\Server\ServerConfig;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TheCodingMachine\Graphqlite\Bundle\Controller\GraphqliteController as Core;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GraphqliteController extends Core
 {
@@ -36,26 +36,28 @@ class GraphqliteController extends Core
 
     public function handleRequest(Request $request): Response
     {
-        try{
+        try {
             $response = parent::handleRequest($request);
             $this->getLogger() && $this->getLogger()->debug('response', [
                 'request' => $request,
                 'response' => $response,
                 ]);
-                
+
             return $response;
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             $this->getLogger() && $this->getLogger()->error('handleRequest', [
                 'exception' => $exception,
                 ]);
+
             return new JsonResponse(
                 [
                     'error' => [
                         'code' => 'internal error',
                         'message' => $exception->getMessage(),
                     ],
-                ], 500);
+                ],
+                500
+            );
         }
     }
 }

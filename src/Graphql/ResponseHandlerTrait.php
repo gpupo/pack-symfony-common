@@ -27,6 +27,10 @@ trait ResponseHandlerTrait
             return;
         }
 
+        if (399 < $statusCode && 500 > $statusCode) {
+            $this->throwException(sprintf('Invalid Request (%d)', $statusCode));
+        }
+
         $this->throwException('Empty Results');
     }
 
@@ -40,10 +44,10 @@ trait ResponseHandlerTrait
     protected function checkViolations($violations): void
     {
         if (0 !== \count($violations)) {
-            $message = 'Invalid request.';
+            $message = 'Invalid data. Violations:';
             // there are errors, now you can show them
-            foreach ($violations as $violation) {
-                $message .= $violation->getMessage().".\n";
+            foreach ($violations as $k => $violation) {
+                $message .= sprintf(' #%s $%s: %s | ', $k + 1, $violation->getPropertyPath(), $violation->getMessage());
             }
             $this->throwException($message, 400);
         }
