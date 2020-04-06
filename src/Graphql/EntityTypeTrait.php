@@ -14,6 +14,23 @@ use DateTimeImmutable;
 
 trait EntityTypeTrait
 {
+    public function toPayload(): array
+    {
+        $list = [];
+
+        foreach ($this->all() as $key => $value) {
+            if ($value instanceof TypeInterface) {
+                $list[$key] = $value->toPayload();
+            } elseif (method_exists($this, 'normalizeToPayload')) {
+                $list[$key] = $this->normalizeToPayload($key, $value);
+            } else {
+                $list[$key] = $value;
+            }
+        }
+
+        return $list;
+    }
+
     protected function dateTimeGetter(string $key): ?DateTimeImmutable
     {
         return $this->elementEmpty($key) ? null : new DateTimeImmutable($this->get($key));
