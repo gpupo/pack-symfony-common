@@ -28,7 +28,7 @@ abstract class AbstractApiClient implements ApiClientInterface
 
     private array $options;
 
-    public function __construct(array $options = [], HttpClientInterface $httpClient, CacheInterface $cache = null, LoggerInterface $logger = null)
+    public function __construct(array $options, HttpClientInterface $httpClient, CacheInterface $cache = null, LoggerInterface $logger = null)
     {
         $this->initLogger($logger, 'api-http-client');
         $this->setOptions($options);
@@ -92,15 +92,20 @@ abstract class AbstractApiClient implements ApiClientInterface
     {
         $url = $this->factoryRequestUrl($path);
         $options = $this->factoryRequestOptions() + $options;
-
         $this->getLogger() && $this->getLogger()->debug('request', [
             'client' => \get_class($this->getHttpClient()),
             'method' => $method,
             'endpoint' => $url,
             'options' => $options,
-        ]);
+            ]);
 
-        return $this->getHttpClient()->request($method, $url, $options);
+        $response = $this->getHttpClient()->request($method, $url, $options);
+        if (399 < $response->getStatusCode()) {
+            $this->getLogger() && $this->getLogger()
+                ->error('content', json_decode($response->getContent(false), true));
+        }
+
+        return $response;
     }
 
     protected function payloadNormalize(array $payload): array

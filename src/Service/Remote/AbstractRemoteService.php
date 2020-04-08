@@ -72,7 +72,7 @@ abstract class AbstractRemoteService extends AbstractService
         $this->checkViolations($this->getValidator()->validate($entity));
         $payload = $entity->toPayload();
         $this->getLogger() && $this->getLogger()->debug('payload', $payload);
-        $response = $this->getApiClient()->postRequest('/'. $this->getDomain(), $payload);
+        $response = $this->getApiClient()->postRequest('/'.$this->getDomain(), $payload);
         $this->checkStatusCode($response);
 
         return $this->responseToEntity($response);

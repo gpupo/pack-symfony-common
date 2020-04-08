@@ -66,19 +66,17 @@ class CachingHttpClient implements HttpClientInterface
                     'method' => $method,
                     'endpoint' => $url,
                     'options' => $options,
-                    'response' => [
-                        'content' =>  $response->getContent(),
-                    ],
+                    'response_content' => $response->getContent(false),
                 ]);
-                return $response;
 
-            } catch(\Exception $exception) {
+                return $response;
+            } catch (\Exception $exception) {
                 $this->getLogger() && $this->getLogger()->error('request error', [
                     'method' => $method,
                     'endpoint' => $url,
                     'options' => $options,
                     'response' => [
-                        'content' =>  $response->getContent(),
+                        'content' => $response->getContent(),
                     ],
                 ]);
 
