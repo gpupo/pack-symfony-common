@@ -67,6 +67,17 @@ abstract class AbstractRemoteService extends AbstractService
         });
     }
 
+    public function add(TypeAnnotatedGeneratorInterface $entity): TypeAnnotatedGeneratorInterface
+    {
+        $this->checkViolations($this->getValidator()->validate($entity));
+        $payload = $entity->toPayload();
+        $this->getLogger() && $this->getLogger()->debug('payload', $payload);
+        $response = $this->getApiClient()->postRequest('/'. $this->getDomain(), $payload);
+        $this->checkStatusCode($response);
+
+        return $this->responseToEntity($response);
+    }
+
     protected function getDomain(): string
     {
         return $this->domain;
