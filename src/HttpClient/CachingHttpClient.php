@@ -60,13 +60,30 @@ class CachingHttpClient implements HttpClientInterface
         $url = implode('', $url);
 
         if (!empty($options['body']) || !empty($options['extra']['no_cache']) || !\in_array($method, ['GET', 'HEAD', 'OPTIONS'], true)) {
-            $this->getLogger() && $this->getLogger()->debug('Bypass cache', [
-                'method' => $method,
-                'endpoint' => $url,
-                'options' => $options,
-            ]);
+            try {
+                $response = $this->getHttpClient()->request($method, $url, $options);
+                $this->getLogger() && $this->getLogger()->debug('Bypass cache', [
+                    'method' => $method,
+                    'endpoint' => $url,
+                    'options' => $options,
+                    'response' => [
+                        'content' =>  $response->getContent(),
+                    ],
+                ]);
+                return $response;
 
-            return $this->getHttpClient()->request($method, $url, $options);
+            } catch(\Exception $exception) {
+                $this->getLogger() && $this->getLogger()->error('request error', [
+                    'method' => $method,
+                    'endpoint' => $url,
+                    'options' => $options,
+                    'response' => [
+                        'content' =>  $response->getContent(),
+                    ],
+                ]);
+
+                throw $exception;
+            }
         }
         $request = Request::create($url, $method);
         $request->attributes->set('http_client_options', $options);
@@ -97,8 +114,7 @@ class CachingHttpClient implements HttpClientInterface
         ]);
 
         $this->getLogger() && $this->getLogger()->debug('Using cache', [
-            'method' => $method,
-            'endpoint' => $url,
+            'method' => $method,            'endpoint' => $url,
             'options' => $options,
             'httpCache' => $this->cache->getLog(),
         ]);
