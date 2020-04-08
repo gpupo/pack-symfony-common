@@ -28,7 +28,7 @@ trait ResponseHandlerTrait
         }
 
         if (399 < $statusCode && 500 > $statusCode) {
-            $this->throwException(sprintf('Invalid Request (%d)', $statusCode));
+            $this->throwException(sprintf('Invalid Request (%d)[%s]', $statusCode, trim($response->getContent(false))), $statusCode);
         }
 
         $this->throwException('Empty Results');
