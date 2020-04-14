@@ -102,7 +102,7 @@ abstract class AbstractApiClient implements ApiClientInterface
         $response = $this->getHttpClient()->request($method, $url, $options);
         if (399 < $response->getStatusCode()) {
             $this->getLogger() && $this->getLogger()
-                ->error('content', json_decode($response->getContent(false), true));
+                ->error('content', ['response' => json_decode($response->getContent(false), true)]);
         }
 
         return $response;
