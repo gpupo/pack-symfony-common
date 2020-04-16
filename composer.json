@@ -64,7 +64,9 @@
       "willdurand/negotiation": "^2.3",
       "twig/twig": "^2.10",
       "twig/extensions": "^1.5",
-      "vich/uploader-bundle": "^1.12"
+      "vich/uploader-bundle": "^1.12",
+        "nyholm/psr7": "^1.2",
+        "symfony/psr-http-message-bridge": "^2.0"
     },
     "autoload": {
         "psr-4": {

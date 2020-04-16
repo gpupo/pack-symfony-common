@@ -8,13 +8,8 @@ declare(strict_types=1);
  * distributed with this source code. For more information, see <https://opensource.gpupo.com/>
  */
 
-namespace Gpupo\PackSymfonyCommon\Tests\Traits;
+namespace Gpupo\PackSymfonyCommon\HttpClient;
 
-use Gpupo\PackSymfonyCommon\Tests\TestCaseAbstract;
-
-/**
- * @coversNothing
- */
-class TestCaseTraitTest extends TestCaseAbstract
+class RuntimeException extends \RuntimeExpeption
 {
 }

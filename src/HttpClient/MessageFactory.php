@@ -11,7 +11,20 @@ declare(strict_types=1);
 namespace Gpupo\PackSymfonyCommon\HttpClient;
 
 use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
+use Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 
-class MessageFactory extends PsrHttpFactory
+class MessageFactory extends PsrHttpFactory implements HttpMessageFactoryInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function createRequest(Request $symfonyRequest)
+    {
+        try {
+            return parent::createRequest($symfonyRequest);
+        } catch (\Exception $exception) {
+            return RuntimeException('Fail on create request', 0, $exception);
+        }
+    }
 }
