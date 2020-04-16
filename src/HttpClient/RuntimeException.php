@@ -10,6 +10,6 @@ declare(strict_types=1);
 
 namespace Gpupo\PackSymfonyCommon\HttpClient;
 
-class RuntimeException extends \RuntimeExpeption
+class RuntimeException extends \Exception
 {
 }

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Gpupo\PackSymfonyCommon\Graphql;
 
+use Gpupo\PackSymfonyCommon\HttpClient\RuntimeException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 trait ResponseHandlerTrait
@@ -21,6 +22,8 @@ trait ResponseHandlerTrait
 
     protected function checkStatusCode(ResponseInterface $response): void
     {
+        $this->getLogger() && $this->getLogger()->debug('checking http status code');
+
         $statusCode = $response->getStatusCode();
 
         if (199 < $statusCode && 300 > $statusCode) {
@@ -36,6 +39,8 @@ trait ResponseHandlerTrait
 
     protected function factoryFromResponse(ResponseInterface $response, callable $factory)
     {
+        $this->getLogger() && $this->getLogger()->debug('factoring from response');
+
         $this->checkStatusCode($response);
 
         return $factory($response);
@@ -65,14 +70,30 @@ trait ResponseHandlerTrait
         $this->throwException('::factoryEntity must be implemented in the final class', 500);
     }
 
+    protected function convertResponseToArray(ResponseInterface $response): array
+    {
+        $this->getLogger() && $this->getLogger()->debug('convert response into array');
+
+        try {
+            return $response->toArray(false);
+        } catch (\Exception $e) {
+            $this->getLogger() && $this->getLogger()->error('get content', [
+                'throw' => $e->getMessage(),
+                // 'content' => $response->getContent(false),
+            ]);
+
+            throw new RuntimeException('Unprocessable response', 500, $e);
+        }
+    }
+
     protected function responseColletionToData(ResponseInterface $response): array
     {
-        return $response->toArray();
+        return $this->convertResponseToArray($response);
     }
 
     protected function responseEntityToData(ResponseInterface $response): array
     {
-        return $response->toArray();
+        return $this->convertResponseToArray($response);
     }
 
     protected function responseToCollection(ResponseInterface $response): array

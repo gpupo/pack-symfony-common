@@ -28,12 +28,14 @@ abstract class AbstractApiClient implements ApiClientInterface
 
     private array $options;
 
+    private bool $cacheEnabled = false;
+
     public function __construct(array $options, HttpClientInterface $httpClient, CacheInterface $cache = null, LoggerInterface $logger = null)
     {
         $this->initLogger($logger, 'api-http-client');
         $this->setOptions($options);
         $this->setHttpCLient($httpClient);
-        $this->setSimpleCache($cache);
+        $this->cacheEnabled && $this->setSimpleCache($cache);
     }
 
     public function getRequest(string $path, array $options = []): ResponseInterface
@@ -91,7 +93,7 @@ abstract class AbstractApiClient implements ApiClientInterface
     protected function request(string $method, string $path, array $options): ResponseInterface
     {
         $url = $this->factoryRequestUrl($path);
-        $options = $this->factoryRequestOptions() + $options;
+        $options = array_merge($this->factoryRequestOptions(), $options);
         $this->getLogger() && $this->getLogger()->debug('request', [
             'client' => \get_class($this->getHttpClient()),
             'method' => $method,

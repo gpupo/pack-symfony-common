@@ -41,6 +41,8 @@ abstract class AbstractRemoteService extends AbstractService
 
     public function findById(string $id): ?TypeAnnotatedGeneratorInterface
     {
+        $this->getLogger() && $this->getLogger()->debug('checking violations');
+
         $this->checkViolations(
             $this->getValidator()
                 ->validate($id, [
@@ -54,7 +56,14 @@ abstract class AbstractRemoteService extends AbstractService
 
     public function findByPath(string $path): ?TypeAnnotatedGeneratorInterface
     {
-        return $this->responseToEntity($this->getApiClient()->getRequest($path));
+        $this->getLogger() && $this->getLogger()->debug('findByPath', [
+            'endpoint' => $path,
+        ]);
+
+        $response = $this->getApiClient()->getRequest($path);
+        $this->getLogger() && $this->getLogger()->debug('transform into entity');
+
+        return $this->responseToEntity($response);
     }
 
     public function findAll(): array

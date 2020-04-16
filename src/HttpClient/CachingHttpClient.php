@@ -40,9 +40,7 @@ class CachingHttpClient implements HttpClientInterface
 
         $this->initLogger($logger, 'caching-http');
         $this->setHttpCLient($httpClient);
-
-        $kernel = new HttpClientKernel($httpClient);
-        $this->cache = new HttpCache($kernel, $store, null, $defaultOptions);
+        $this->initCache($store, $defaultOptions, true);
 
         unset($defaultOptions['debug'], $defaultOptions['default_ttl'], $defaultOptions['private_headers'], $defaultOptions['allow_reload'], $defaultOptions['allow_revalidate'], $defaultOptions['stale_while_revalidate'], $defaultOptions['stale_if_error'], $defaultOptions['trace_level'], $defaultOptions['trace_header']);
 
@@ -56,28 +54,27 @@ class CachingHttpClient implements HttpClientInterface
      */
     public function request(string $method, string $url, array $options = []): ResponseInterface
     {
+        $this->getLogger() && $this->getLogger()->debug('init');
+
         list($url, $options) = $this->prepareRequest($method, $url, $options, $this->defaultOptions, true);
         $url = implode('', $url);
 
-        if (!empty($options['body']) || !empty($options['extra']['no_cache']) || !\in_array($method, ['GET', 'HEAD', 'OPTIONS'], true)) {
+        $this->getLogger() && $this->getLogger()->debug('requesting', [
+            'endpoint' => $url,
+            'method' => $method,
+        ]);
+
+        if (!$this->cache || !empty($options['body']) || !empty($options['extra']['no_cache']) || !\in_array($method, ['GET', 'HEAD', 'OPTIONS'], true)) {
             try {
+                $this->getLogger() && $this->getLogger()->debug('Bypass');
                 $response = $this->getHttpClient()->request($method, $url, $options);
-                $this->getLogger() && $this->getLogger()->debug('Bypass cache', [
-                    'method' => $method,
-                    'endpoint' => $url,
-                    'options' => $options,
-                    'response_content' => $response->getContent(false),
-                ]);
 
                 return $response;
             } catch (\Exception $exception) {
                 $this->getLogger() && $this->getLogger()->error('request error', [
                     'method' => $method,
                     'endpoint' => $url,
-                    'options' => $options,
-                    'response' => [
-                        'content' => $response->getContent(),
-                    ],
+                    'exception' => $exception->getMessage(),
                 ]);
 
                 throw $exception;
@@ -106,16 +103,13 @@ class CachingHttpClient implements HttpClientInterface
         }
 
         $response = $this->cache->handle($request);
+        $this->getLogger() && $this->getLogger()->debug('create mock response');
         $response = new MockResponse($response->getContent(), [
             'http_code' => $response->getStatusCode(),
             'response_headers' => $response->headers->allPreserveCase(),
         ]);
 
-        $this->getLogger() && $this->getLogger()->debug('Using cache', [
-            'method' => $method,            'endpoint' => $url,
-            'options' => $options,
-            'httpCache' => $this->cache->getLog(),
-        ]);
+        $this->getLogger() && $this->getLogger()->debug('return Response');
 
         return MockResponse::fromRequest($method, $url, $options, $response);
     }
@@ -130,6 +124,8 @@ class CachingHttpClient implements HttpClientInterface
         } elseif (!is_iterable($responses)) {
             throw new \TypeError(sprintf('%s() expects parameter 1 to be an iterable of ResponseInterface objects, %s given.', __METHOD__, \is_object($responses) ? \get_class($responses) : \gettype($responses)));
         }
+
+        $this->getLogger() && $this->getLogger()->debug('stream init');
 
         $mockResponses = [];
         $clientResponses = [];
@@ -150,9 +146,21 @@ class CachingHttpClient implements HttpClientInterface
             return new ResponseStream(MockResponse::stream($mockResponses, $timeout));
         }
 
+        $this->getLogger() && $this->getLogger()->debug('returning stream');
+
         return new ResponseStream((function () use ($mockResponses, $clientResponses, $timeout) {
             yield from MockResponse::stream($mockResponses, $timeout);
             yield $this->getHttpClient()->stream($clientResponses, $timeout);
         })());
+    }
+
+    protected function initCache(StoreInterface $store, array $defaultOptions, bool $cacheEnabled): void
+    {
+        if ($cacheEnabled) {
+            $this->getLogger() && $this->getLogger()->debug('init http cache');
+
+            $kernel = new HttpClientKernel($this->getHttpClient());
+            $this->cache = new HttpCache($kernel, $store, null, $defaultOptions);
+        }
     }
 }
