@@ -37,7 +37,6 @@
       "symfony/security-bundle": "^5.0",
       "symfony/security-csrf": "^5.0",
       "symfony/serializer-pack": "*",
-      "symfony/swiftmailer-bundle": "^3.4",
       "symfony/templating": "^5.0",
       "symfony/validator": "^5.0",
       "symfony/web-link": "^5.0",
