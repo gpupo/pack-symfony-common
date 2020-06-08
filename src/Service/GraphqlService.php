@@ -8,7 +8,7 @@ declare(strict_types=1);
  * distributed with this source code. For more information, see <https://opensource.gpupo.com/>
  */
 
-namespace Gpupo\PackSymfonyCommon\Services;
+namespace Gpupo\PackSymfonyCommon\Service;
 
 use Gpupo\PackSymfonyCommon\Graphql\Mutation;
 use Gpupo\PackSymfonyCommon\Graphql\Query;
