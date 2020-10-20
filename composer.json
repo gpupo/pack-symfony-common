@@ -11,8 +11,8 @@
     "keywords": ["common", "development"],
     "license": "MIT",
     "require": {
-      "php": ">=7.4",
-
+      "php": ">=7.4 || ^8.0",
+      
       "ext-bcmath": "*",
       "ext-iconv": "*",
       "ext-intl": "*",
