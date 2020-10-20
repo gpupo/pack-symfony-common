@@ -12,7 +12,7 @@
     "license": "MIT",
     "require": {
       "php": ">=7.4 || ^8.0",
-      
+
       "ext-bcmath": "*",
       "ext-iconv": "*",
       "ext-intl": "*",
@@ -63,7 +63,9 @@
       "ocramius/proxy-manager": "^2.5",
       "willdurand/negotiation": "^2.3",
       "vich/uploader-bundle": "^1.12",
-      "php-amqplib/php-amqplib": "^2.11"
+      "php-amqplib/php-amqplib": "^2.11",
+      "nyholm/psr7": "*",
+      "symfony/psr-http-message-bridge": "*"
     },
     "autoload": {
         "psr-4": {
