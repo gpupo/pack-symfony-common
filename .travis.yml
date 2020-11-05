@@ -5,6 +5,9 @@ os:
 php:
   - 7.4
   - nightly
+jobs:
+  allow_failures:
+  - php: nightly
 before_script:
   - composer self-update
   - COMPOSER_MEMORY_LIMIT=5G composer install --prefer-dist
