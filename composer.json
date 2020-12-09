@@ -58,7 +58,6 @@
         "gpupo/common-sdk": "^6.2",
         "jackalope/jackalope-doctrine-dbal": "^1.6",
         "nelmio/cors-bundle": "^2.1",
-        "ocramius/proxy-manager": "^2.10",
         "vich/uploader-bundle": "^1.16",
         "php-amqplib/php-amqplib": "^2.12",
         "nyholm/psr7": "^1.3",
