@@ -62,9 +62,16 @@
         "vich/uploader-bundle": "^1.16",
         "php-amqplib/php-amqplib": "^2.12",
         "nyholm/psr7": "^1.3",
-        "willdurand/negotiation": "^3.0"
+        "willdurand/negotiation": "^3.0",
+        "antishov/doctrine-extensions-bundle":"dev-php8"
       
     },
+    "repositories": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/gpupo/StofDoctrineExtensionsBundle"
+        }
+     ],
     "autoload": {
         "psr-4": {
             "Gpupo\\PackSymfonyCommon\\": "src",
