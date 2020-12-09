@@ -19,7 +19,7 @@ endif
 
 ## Install vendores
 install:
-	composer install --prefer-dist --no-scripts
+	COMPOSER_MEMORY_LIMIT=9G composer install --prefer-dist --no-scripts
 
 ## Include custom Targets:
 # include bin/make-file/functions/*.mk
