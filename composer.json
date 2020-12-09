@@ -50,20 +50,7 @@
       "symfony/notifier": "^5.1",
       "symfony/string": "^5.1",
       "symfony/expression-language": "^5.1",
-      "symfony/psr-http-message-bridge": "*",
-
-      "jms/serializer-bundle": "^3.5",
-      "sensio/framework-extra-bundle": "^5.5",
-      "php-translation/symfony-bundle": "^0.12",
-        "gpupo/common-sdk": "^6.2",
-        "jackalope/jackalope-doctrine-dbal": "^1.6",
-        "nelmio/cors-bundle": "^2.1",
-        "vich/uploader-bundle": "^1.16",
-        "php-amqplib/php-amqplib": "^2.12",
-        "nyholm/psr7": "^1.3",
-        "willdurand/negotiation": "^3.0",
-        "antishov/doctrine-extensions-bundle":"dev-php8"
-      
+      "symfony/psr-http-message-bridge": "*"      
     },
     "repositories": [
         {
