@@ -17,7 +17,7 @@
     </testsuites>
     <php>
         <const name="FOO" value="bar"/>
-        <env name="SYMFONY_PHPUNIT_VERSION" value="8" />
+        <env name="SYMFONY_PHPUNIT_VERSION" value="9" />
 
         <!-- ###+ symfony/mailer ### -->
         <!-- MAILER_DSN=smtp://localhost -->
