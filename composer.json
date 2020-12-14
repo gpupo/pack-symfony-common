@@ -26,7 +26,7 @@
         }
     },
     "require-dev": {
-        "gpupo/pack-symfony-dev": "dev-master"
+        "gpupo/pack-symfony-dev": "dev-main"
     },
     "scripts": {
         "test": "APP_ENV=test vendor/bin/simple-phpunit",

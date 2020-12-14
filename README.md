@@ -1,6 +1,6 @@
 Pacote de componentes de uso comum em projetos que rodam Symfony Framework
 
-[![Build Status](https://secure.travis-ci.org/gpupo/pack-symfony-common.png?branch=master)](http://travis-ci.org/gpupo/pack-symfony-common)
+[![Build Status](https://secure.travis-ci.org/gpupo/pack-symfony-common.png?branch=main)](http://travis-ci.org/gpupo/pack-symfony-common)
 
 
 ## Requisitos para uso

@@ -3,12 +3,12 @@ layout: default
 ---
 Pacote de componentes de uso comum em projetos que rodam Symfony Framework
 
-[![Build Status](https://secure.travis-ci.org/gpupo/pack-symfony-common.png?branch=master)](http://travis-ci.org/gpupo/pack-symfony-common)
+[![Build Status](https://secure.travis-ci.org/gpupo/pack-symfony-common.png?branch=main)](http://travis-ci.org/gpupo/pack-symfony-common)
 
 
 ## Requisitos para uso
 
-* PHP *>=7.4*
+* PHP *>=8.0*
 * [Composer Dependency Manager](http://getcomposer.org)
 
 Este componente **não é uma aplicação Stand Alone** e seu objetivo é ser utilizado como biblioteca.
