@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractTestCase extends TestCase
 {
-    use ResourcesTrait;
     use HelperTrait;
     use LoggerAwareTrait;
+    use ResourcesTrait;
 }

@@ -16,8 +16,8 @@ use Gpupo\PackSymfonyCommon\Validator\ValidatorAwareTrait;
 
 abstract class AbstractController
 {
-    use RemoteServiceAwareTrait;
     use DoctrineManagerAwareTrait;
-    use ValidatorAwareTrait;
+    use RemoteServiceAwareTrait;
     use ResponseHandlerTrait;
+    use ValidatorAwareTrait;
 }

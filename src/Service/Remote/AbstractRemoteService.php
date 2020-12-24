@@ -26,9 +26,9 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 abstract class AbstractRemoteService extends AbstractService
 {
     use ApiClientAwareTrait;
-    use ValidatorAwareTrait;
-    use ResponseHandlerTrait;
     use LoggerAwareTrait;
+    use ResponseHandlerTrait;
+    use ValidatorAwareTrait;
 
     protected string $domain;
 

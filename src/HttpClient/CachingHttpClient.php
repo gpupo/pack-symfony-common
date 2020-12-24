@@ -25,8 +25,8 @@ use Symfony\Contracts\HttpClient\ResponseStreamInterface;
 
 class CachingHttpClient implements HttpClientInterface
 {
-    use HttpClientTrait;
     use HttpClientAwareTrait;
+    use HttpClientTrait;
     use LoggerAwareTrait;
 
     protected $cache;

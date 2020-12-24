@@ -16,8 +16,8 @@ use Symfony\Component\VarDumper\Dumper\CliDumper;
 
 abstract class AbstractServiceTestCase extends WebTestCase
 {
-    use ResourcesTrait;
     use HelperTrait;
+    use ResourcesTrait;
 
     protected $dynamicKernel;
 

@@ -21,8 +21,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 abstract class AbstractApiClient implements ApiClientInterface
 {
-    use HttpClientTrait;
     use HttpClientAwareTrait;
+    use HttpClientTrait;
     use LoggerAwareTrait;
     use SimpleCacheAwareTrait;
 
